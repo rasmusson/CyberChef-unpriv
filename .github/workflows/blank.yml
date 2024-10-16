@@ -17,9 +17,22 @@ jobs:
     steps:
       
       - uses: octokit/request-action@v2.x
-        id: get_latest_release
+        id: get_latest_release_remote
         with:
           route: GET /repos/gchq/CyberChef/releases/latest
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: "echo latest release: '${{ fromJSON(steps.get_latest_release.outputs.data).tag_name }}'"
+      - run: "echo latest release: '${{ fromJSON(steps.get_latest_release_remote.outputs.data).tag_name }}'"
+
+      - uses: octokit/request-action@v2.x
+        id: get_latest_release_local
+        with:
+          route: GET /repos/rasmusson/CyberChef-unpriv/releases/latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - run: "echo latest release: '${{ fromJSON(steps.get_latest_release_local.outputs.data).tag_name }}'"
+
+      - uses: actions/checkout@v4
+        with:
+          repository: gchq/CyberChef
+          ref: refs/tags/${{ fromJSON(steps.get_latest_release_remote.outputs.data).tag_name }}
