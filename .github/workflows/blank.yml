@@ -24,13 +24,13 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: "echo latest release: '${{ fromJSON(steps.get_latest_release_remote.outputs.data).tag_name }}'"
 
-      - uses: octokit/request-action@v2.x
-        id: get_latest_release_local
-        with:
-          route: GET /repos/rasmusson/CyberChef-unpriv/releases/latest
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: "echo latest release: '${{ fromJSON(steps.get_latest_release_local.outputs.data).tag_name }}'"
+#      - uses: octokit/request-action@v2.x
+#        id: get_latest_release_local
+#        with:
+#          route: GET /repos/rasmusson/CyberChef-unpriv/releases/latest
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#      - run: "echo latest release: '${{ fromJSON(steps.get_latest_release_local.outputs.data).tag_name }}'"
 
       - uses: actions/checkout@v4
         with:
